@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<meta charset="UTF-8"></meta>
+
+<body>
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container">
+		<div align="right">
+			<a th:href="@{/users/nuevo}" id="add-row" type="button"
+				class="btn btn-primary">Nuevo</a>
+		</div>
+		<div>
+			<form th:action="@{/users/buscar}" method="post" th:object="${users}">
+				<div class="form-group">
+
+					<label for="users">Buscar:</label> <input type="text"
+						class="form-control" th:field="*{username}" id="users"></input>
+					<div align="right">
+						<button type="submit" class="btn btn-success">Aceptar</button>
+						<a href="/users/listar" class="btn btn-danger">Cancelar</a>
+					</div>
+				</div>
+
+			</form>
+
+		</div>
+
+		<div class="card">
+			<div class="card-header text-white bg-dark mb-3">Reporte de
+				Users</div>
+			<div class="card-body">
+
+				<div class="table-responsive">
+					<table class="table table-white">
+						<thead class="bg-dark mb-3 text-white">
+							<tr>
+								<th>Id</th>
+								<th>Nombre del user</th>
+								<th>Descripcion del password</th>
+								<th align="center">Operación</th>
+								<th align="center">Operación</th>
+							</tr>
+						</thead>
+						<tbody id="users-list">
+							<tr th:each="users:${listaUsers}">
+								<td th:text="${users.id}"></td>
+								<td th:text="${users.username}"></td>
+								<td th:text="${users.password}"></td>
+							</tr>
+						</tbody>
+					</table>
+					<div th:if="${mensaje}" class="alert alert-info">
+						<p th:text="${mensaje}"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
