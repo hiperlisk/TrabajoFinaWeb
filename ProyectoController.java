@@ -65,7 +65,7 @@ public class ProyectoController {
 
 	@Autowired
 	private IProductoService prService;
-
+	
 	@Autowired
 	private ServletContext context;
 
@@ -95,6 +95,9 @@ public class ProyectoController {
 		} else {
 			int rpta = pService.insertar(proyecto);
 			if (rpta > 0) {
+				model.addAttribute("listaUsuarios", uService.listar());
+				model.addAttribute("listaAreas", arService.listar());
+				model.addAttribute("listaProductos", prService.listar());
 				model.addAttribute("mensaje", "Ya existe");
 				return "/proyecto/proyecto";
 			} else {
@@ -230,7 +233,7 @@ public class ProyectoController {
 			return "proyecto/proyecto";
 		}
 	}
-
+	
 	@RequestMapping(value = "/downloadPDF/{id}", method = RequestMethod.GET)
 	public void downloadPDF(@PathVariable int id, HttpServletRequest request, HttpServletResponse response) {
 		Proyecto proyecto = pService.listarId(id).get();
@@ -438,5 +441,5 @@ public class ProyectoController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}	
 }
